@@ -6,9 +6,8 @@ namespace LD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World");
-            var stundents = new Student();
-
+            StudentManager manager = new StudentManager();
+            manager.stundentai();
         }
     }
 }

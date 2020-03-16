@@ -15,11 +15,8 @@ namespace LD
         public double Egz { get; set; }
 
         public Student()
-
         {
-
             Nd = new List<double>();
-
         }
     }
 }
