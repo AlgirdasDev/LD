@@ -14,6 +14,8 @@ namespace LD
 
         public double Egz { get; set; }
 
+        public double Galutinis { get; set; }
+
         public Student()
         {
             Nd = new List<double>();

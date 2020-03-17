@@ -7,7 +7,7 @@ namespace LD
         static void Main(string[] args)
         {
             StudentManager manager = new StudentManager();
-            manager.stundentai();
+            manager.menu();
         }
     }
 }
