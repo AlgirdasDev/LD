@@ -16,6 +16,7 @@ namespace LD
 
         public double Galutinis { get; set; }
 
+        public double Mediana { get; set; }
         public Student()
         {
             Nd = new List<double>();

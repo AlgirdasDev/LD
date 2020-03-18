@@ -14,9 +14,24 @@ namespace LD
         }
 
         public void menu()
-        { 
-            stundentai();
-            studList();
+        {
+            bool stop = true;
+            while (stop != false)
+            {
+                Console.WriteLine("Sukurti studenta pasirinkite (1)\n" +
+                    "Perziureti studentu sarasa pasirinkti (2)\n" +
+                    "Baigti programa iveskite (0)");
+                var input = Console.ReadLine();
+                if (int.Parse(input) == 1)
+                {
+                    stundentai();
+                }
+                if (int.Parse(input) == 2)
+                {
+                    studList();
+                }
+                if (int.Parse(input) == 0) stop = false;
+            }
         }
         public void stundentai()
         {   
@@ -49,6 +64,19 @@ namespace LD
                 }
                 double vidurkis = (0.3 * (sum / student.Nd.Count)) + (0.7 * student.Egz);
                 student.Galutinis = vidurkis;
+                List<double> mediana= new List<double>();
+                mediana.AddRange(student.Nd);
+                mediana.Add(int.Parse(egz));
+                if ((mediana.Count) % 2 == 0)
+                {
+                    double s = (mediana[(mediana.Count-1) / 2] + mediana[mediana.Count / 2]) / 2;
+                    student.Mediana = s;
+                }
+                if ((mediana.Count) % 2 != 0) 
+                {
+                    double s = mediana[mediana.Count / 2];
+                    student.Mediana = s;
+                }               
                 Students.Add(student);
                 Console.WriteLine("testi studentu ivedima? (Y/N)");
                 var tb = Console.ReadLine();
@@ -60,10 +88,24 @@ namespace LD
         }
         public void studList()
         {
-            Console.WriteLine("{0,-20} {1,-20} {2,20}","Vardas","Pavarde","Galutinis(Vid.)\n");
-            foreach (var student in Students)
+            Console.WriteLine("Iveskite 1 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Vid.)\n" +
+                "Iveskite 2 jei norite kad programa spausintu studentu sarasa pagal Galutinis(Med.)");
+            var input = Console.ReadLine();
+            if (int.Parse(input) == 1) 
+            { 
+                Console.WriteLine("{0,-20} {1,-20} {2,20}","Vardas","Pavarde","Galutinis(Vid.)\n");
+                foreach (var student in Students)
+                {
+                    Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"));
+                }
+            }
+            if (int.Parse(input) == 2)
             {
-                Console.WriteLine("{0, -20} {1, -20} {2, 20}", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"));
+                Console.WriteLine("{0,-20} {1,-20} {2,20}", "Vardas", "Pavarde", "Galutinis(Med.)\n");
+                foreach (var student in Students)
+                {
+                    Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Mediana.ToString("F"));
+                }
             }
         }
     }
