@@ -20,7 +20,7 @@ namespace LD
             {
                 Console.WriteLine("Sukurti studenta pasirinkite (1)\n" +
                     "Perziureti studentu sarasa pasirinkti (2)\n" +
-                    "Baigti programa iveskite (0)");
+                    "Baigti programa iveskite (0)\n");
                 var input = Console.ReadLine();
                 if (int.Parse(input) == 1)
                 {
@@ -34,8 +34,7 @@ namespace LD
             }
         }
         public void stundentai()
-        {   
-                       
+        {
             Boolean stop = false;
             while (stop != true) 
             {
@@ -44,19 +43,52 @@ namespace LD
                 var ivedimas = Console.ReadLine();
                 var vardas= ivedimas.Split(" ")?[0];
                 var pavarde = ivedimas.Split(" ")?[1];
-                Console.WriteLine("Iveskite atliktu namu darbu skaiciu");
-                var n = Console.ReadLine();
-                for (int i = 0; i < int.Parse(n); i++) 
-                {
-                    Console.WriteLine("Iveskite namu darbu rezultatus");
-                    var nd = Console.ReadLine();
-                    student.Nd.Add(double.Parse(nd));
-                }
                 student.Vardas = vardas;
                 student.Pavarde = pavarde;
-                Console.WriteLine("Iveskite egzamino rezultata ");
-                var egz = Console.ReadLine();
-                student.Egz = int.Parse(egz);
+                Console.WriteLine("Jei norite sugeneruoti atsitiktinius pazymius iveskite (Y/N)");
+                var generuoti = Console.ReadLine();
+                if (generuoti.ToUpper() == "Y")
+                {
+                    Random rnd= new Random(); ;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        student.Nd.Add(rnd.Next(1,11));
+                    }
+                    student.Egz = rnd.Next(1, 11);
+                }
+                else
+                {
+                    Console.WriteLine("Jei zinote atliktu namu darbu skaiciu iveskite (Y/N)");
+                    var nezinomi = Console.ReadLine();
+                    if (nezinomi.ToUpper() == "Y")
+                    {
+                        Console.WriteLine("Iveskite atliktu namu darbu skaiciu");
+                        var n = Console.ReadLine();
+                        for (int i = 0; i < int.Parse(n); i++)
+                        {
+                            Console.WriteLine("Iveskite namu darbu rezultatus");
+                            var nd = Console.ReadLine();
+                            student.Nd.Add(double.Parse(nd));
+                        }
+                    }
+                    if (nezinomi.ToUpper() == "N")
+                    {
+                        List<double> nzn = new List<double>();
+                        Console.WriteLine("Iveskite namu darbu rezultatus baigus ivedima iveskite 'STOP'");
+                        bool no = false;
+                        while (no != true)
+                        {
+                            var pazymiai = Console.ReadLine();
+                            if (pazymiai.ToUpper() == "STOP") no = true;
+                            else student.Nd.Add(double.Parse(pazymiai));
+                        }
+                    }
+                    
+                    Console.WriteLine("Iveskite egzamino rezultata ");
+                    var egz = Console.ReadLine();
+                    student.Egz = int.Parse(egz);
+                }
+                
                 double sum = 0;
                 for (int i = 0; i < student.Nd.Count; i++)
                 {
@@ -66,7 +98,7 @@ namespace LD
                 student.Galutinis = vidurkis;
                 List<double> mediana= new List<double>();
                 mediana.AddRange(student.Nd);
-                mediana.Add(int.Parse(egz));
+                mediana.Add(student.Egz);
                 if ((mediana.Count) % 2 == 0)
                 {
                     double s = (mediana[(mediana.Count-1) / 2] + mediana[mediana.Count / 2]) / 2;
