@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace LD
@@ -15,6 +17,7 @@ namespace LD
 
         public void menu()
         {
+            studentaifile();
             bool stop = true;
             while (stop != false)
             {
@@ -88,40 +91,47 @@ namespace LD
                     var egz = Console.ReadLine();
                     student.Egz = int.Parse(egz);
                 }
-                
-                double sum = 0;
-                for (int i = 0; i < student.Nd.Count; i++)
-                {
-                        sum += student.Nd[i];
-                }
-                double vidurkis = (0.3 * (sum / student.Nd.Count)) + (0.7 * student.Egz);
-                student.Galutinis = vidurkis;
-                List<double> mediana= new List<double>();
-                mediana.AddRange(student.Nd);
-                mediana.Add(student.Egz);
-                if ((mediana.Count) % 2 == 0)
-                {
-                    double s = (mediana[(mediana.Count-1) / 2] + mediana[mediana.Count / 2]) / 2;
-                    student.Mediana = s;
-                }
-                if ((mediana.Count) % 2 != 0) 
-                {
-                    double s = mediana[mediana.Count / 2];
-                    student.Mediana = s;
-                }               
                 Students.Add(student);
+                
                 Console.WriteLine("testi studentu ivedima? (Y/N)");
                 var tb = Console.ReadLine();
                 if (tb.ToUpper() == "Y") { }
                 else stop = true;
             }
-
+            galutinis();
             
+        }
+        public void galutinis() 
+        {
+            foreach (var student in Students)
+            {
+                double sum = 0;
+                for (int i = 0; i < student.Nd.Count; i++)
+                {
+                    sum += student.Nd[i];
+                }
+                double vidurkis = (0.3 * (sum / student.Nd.Count)) + (0.7 * student.Egz);
+                student.Galutinis = vidurkis;
+                List<double> mediana = new List<double>();
+                mediana.AddRange(student.Nd);
+                mediana.Add(student.Egz);
+                if ((mediana.Count) % 2 == 0)
+                {
+                    double s = (mediana[(mediana.Count - 1) / 2] + mediana[mediana.Count / 2]) / 2;
+                    student.Mediana = s;
+                }
+                if ((mediana.Count) % 2 != 0)
+                {
+                    double s = mediana[mediana.Count / 2];
+                    student.Mediana = s;
+                }
+            }
         }
         public void studList()
         {
             Console.WriteLine("Iveskite 1 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Vid.)\n" +
-                "Iveskite 2 jei norite kad programa spausintu studentu sarasa pagal Galutinis(Med.)");
+                "Iveskite 2 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Med.)\n" +
+                "Iveskite 3 jei norite kad programa spausdintu studentu Galutinis(Vid.) ir Galutinis(Med.)");
             var input = Console.ReadLine();
             if (int.Parse(input) == 1) 
             { 
@@ -139,6 +149,35 @@ namespace LD
                     Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Mediana.ToString("F"));
                 }
             }
+            if (int.Parse(input) == 3) 
+            {
+
+                Console.WriteLine("{0,-20} {1,-20} {2,20} {3,20}", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)\n");
+                foreach (var student in Students)
+                {
+                    Console.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"), student.Mediana.ToString("F"));
+                }
+            }
+        }
+        public void studentaifile() 
+        {
+            string line;
+            string path = @"C:\Users\algir\Desktop\Studentai.txt";
+            // Read the file and display it line by line.  
+            System.IO.StreamReader file =
+                new System.IO.StreamReader(@"C:\Users\algir\Desktop\Studentai.txt");
+            string[] records = File.ReadAllLines(path);
+            foreach (string record in records)
+            {
+                string[] fields = record.Split('\t');
+                /* Parse each field into the corresponding r column
+                 * ....
+                 */
+                Console.WriteLine(fields);
+            }
+            file.Close();
+
+
         }
     }
 }
