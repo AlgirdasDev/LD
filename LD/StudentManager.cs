@@ -115,6 +115,7 @@ namespace LD
                 List<double> mediana = new List<double>();
                 mediana.AddRange(student.Nd);
                 mediana.Add(student.Egz);
+                mediana.Sort();
                 if ((mediana.Count) % 2 == 0)
                 {
                     double s = (mediana[(mediana.Count - 1) / 2] + mediana[mediana.Count / 2]) / 2;
@@ -129,6 +130,7 @@ namespace LD
         }
         public void studList()
         {
+            
             Console.WriteLine("Iveskite 1 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Vid.)\n" +
                 "Iveskite 2 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Med.)\n" +
                 "Iveskite 3 jei norite kad programa spausdintu studentu Galutinis(Vid.) ir Galutinis(Med.)");
@@ -161,21 +163,34 @@ namespace LD
         }
         public void studentaifile() 
         {
-            string line;
             string path = @"C:\Users\algir\Desktop\Studentai.txt";
-            // Read the file and display it line by line.  
-            System.IO.StreamReader file =
-                new System.IO.StreamReader(@"C:\Users\algir\Desktop\Studentai.txt");
             string[] records = File.ReadAllLines(path);
+            var eile = new List<String>();
+            var pirmaeil = true;
             foreach (string record in records)
             {
-                string[] fields = record.Split('\t');
-                /* Parse each field into the corresponding r column
-                 * ....
-                 */
-                Console.WriteLine(fields);
+                if (pirmaeil) 
+                {
+                    eile = record.Split(' ' , StringSplitOptions.RemoveEmptyEntries).ToList();
+                    pirmaeil = false;
+                    continue;
+                }
+                var student = new Student();
+                var vardas = record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[0];
+                var pavarde = record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[1];
+                student.Vardas = vardas;
+                student.Pavarde = pavarde;
+                foreach (var studeile in eile.Where(nd => nd.Contains("ND")))
+                {
+                    var pazymiai=record.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?[eile.IndexOf(studeile)];
+                    student.Nd.Add(double.Parse(pazymiai));
+                }
+                var EgzIndex = eile.IndexOf("Egz.");
+                var egz= record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[EgzIndex];
+                student.Egz = double.Parse(egz);
+                Students.Add(student);
             }
-            file.Close();
+            galutinis();
 
 
         }
