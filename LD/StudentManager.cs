@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,24 +21,35 @@ namespace LD
             bool stop = true;
             while (stop != false)
             {
-                Console.WriteLine("Sukurti studenta pasirinkite (1)\n" +
-                    "Perziureti studentu sarasa pasirinkti (2)\n" +
-                    "Nuskaityti studentus is failo (3)\n" +
-                    "Baigti programa iveskite (0)\n");
-                var input = Console.ReadLine();
-                if (int.Parse(input) == 1)
+                try
                 {
-                    stundentai();
+
+                    Console.WriteLine("Sukurti studenta pasirinkite (1)\n" +
+                        "Perziureti studentu sarasa pasirinkti (2)\n" +
+                        "Nuskaityti studentus is failo (3)\n" +
+                        "Baigti programa iveskite (0)\n");
+                    var input = Console.ReadLine();
+                    if (int.Parse(input) == 1)
+                    {
+                        stundentai();
+                    }
+                    if (int.Parse(input) == 2)
+                    {
+                        studList();
+                    }
+                    if (int.Parse(input) == 3)
+                    {
+                        studentaifile();
+                    }
+                    if (int.Parse(input) == 0) stop = false;
                 }
-                if (int.Parse(input) == 2)
+                catch (FormatException e) 
                 {
-                    studList();
+                    Console.WriteLine("\nERROR \n");
+                    Console.WriteLine($"Generated message: {e.Message}");
+                    Console.WriteLine("\nPress enter to continue");
+                    Console.ReadLine();
                 }
-                if (int.Parse(input) == 3)
-                {
-                    studentaifile();
-                }
-                if (int.Parse(input) == 0) stop = false;
             }
         }
         public void stundentai()
@@ -134,35 +146,44 @@ namespace LD
         }
         public void studList()
         {
-            
-            Console.WriteLine("Iveskite 1 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Vid.)\n" +
-                "Iveskite 2 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Med.)\n" +
-                "Iveskite 3 jei norite kad programa spausdintu studentu Galutinis(Vid.) ir Galutinis(Med.)");
-            var input = Console.ReadLine();
-            if (int.Parse(input) == 1) 
-            { 
-                Console.WriteLine("{0,-20} {1,-20} {2,20}","Vardas","Pavarde","Galutinis(Vid.)\n");
-                foreach (var student in Students.OrderBy(x => x.Vardas))
-                {
-                    Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"));
-                }
-            }
-            if (int.Parse(input) == 2)
+            try
             {
-                Console.WriteLine("{0,-20} {1,-20} {2,20}", "Vardas", "Pavarde", "Galutinis(Med.)\n");
-                foreach (var student in Students.OrderBy(x => x.Vardas))
+                Console.WriteLine("Iveskite 1 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Vid.)\n" +
+                    "Iveskite 2 jei norite kad programa spausdintu studentu sarasa pagal Galutinis(Med.)\n" +
+                    "Iveskite 3 jei norite kad programa spausdintu studentu Galutinis(Vid.) ir Galutinis(Med.)");
+                var input = Console.ReadLine();
+                if (int.Parse(input) == 1)
                 {
-                    Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Mediana.ToString("F"));
+                    Console.WriteLine("{0,-20} {1,-20} {2,20}", "Vardas", "Pavarde", "Galutinis(Vid.)\n");
+                    foreach (var student in Students.OrderBy(x => x.Vardas))
+                    {
+                        Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"));
+                    }
                 }
-            }
-            if (int.Parse(input) == 3) 
-            {
+                if (int.Parse(input) == 2)
+                {
+                    Console.WriteLine("{0,-20} {1,-20} {2,20}", "Vardas", "Pavarde", "Galutinis(Med.)\n");
+                    foreach (var student in Students.OrderBy(x => x.Vardas))
+                    {
+                        Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Mediana.ToString("F"));
+                    }
+                }
+                if (int.Parse(input) == 3)
+                {
 
-                Console.WriteLine("{0,-20} {1,-20} {2,20} {3,20}", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)\n");
-                foreach (var student in Students.OrderBy(x=>x.Vardas))
-                {
-                    Console.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"), student.Mediana.ToString("F"));
+                    Console.WriteLine("{0,-20} {1,-20} {2,20} {3,20}", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)\n");
+                    foreach (var student in Students.OrderBy(x => x.Vardas))
+                    {
+                        Console.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"), student.Mediana.ToString("F"));
+                    }
                 }
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("\nERROR \n");
+                Console.WriteLine($"Generated message: {e.Message}");
+                Console.WriteLine("\nPress enter to continue");
+                Console.ReadLine();
             }
         }
         public void studentaifile() 
