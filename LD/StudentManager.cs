@@ -17,12 +17,12 @@ namespace LD
 
         public void menu()
         {
-            studentaifile();
             bool stop = true;
             while (stop != false)
             {
                 Console.WriteLine("Sukurti studenta pasirinkite (1)\n" +
                     "Perziureti studentu sarasa pasirinkti (2)\n" +
+                    "Nuskaityti studentus is failo (3)\n" +
                     "Baigti programa iveskite (0)\n");
                 var input = Console.ReadLine();
                 if (int.Parse(input) == 1)
@@ -32,6 +32,10 @@ namespace LD
                 if (int.Parse(input) == 2)
                 {
                     studList();
+                }
+                if (int.Parse(input) == 3)
+                {
+                    studentaifile();
                 }
                 if (int.Parse(input) == 0) stop = false;
             }
@@ -138,7 +142,7 @@ namespace LD
             if (int.Parse(input) == 1) 
             { 
                 Console.WriteLine("{0,-20} {1,-20} {2,20}","Vardas","Pavarde","Galutinis(Vid.)\n");
-                foreach (var student in Students)
+                foreach (var student in Students.OrderBy(x => x.Vardas))
                 {
                     Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"));
                 }
@@ -146,7 +150,7 @@ namespace LD
             if (int.Parse(input) == 2)
             {
                 Console.WriteLine("{0,-20} {1,-20} {2,20}", "Vardas", "Pavarde", "Galutinis(Med.)\n");
-                foreach (var student in Students)
+                foreach (var student in Students.OrderBy(x => x.Vardas))
                 {
                     Console.WriteLine("{0, -20} {1, -20} {2, 20} ", student.Vardas, student.Pavarde, student.Mediana.ToString("F"));
                 }
@@ -155,7 +159,7 @@ namespace LD
             {
 
                 Console.WriteLine("{0,-20} {1,-20} {2,20} {3,20}", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)\n");
-                foreach (var student in Students)
+                foreach (var student in Students.OrderBy(x=>x.Vardas))
                 {
                     Console.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"), student.Mediana.ToString("F"));
                 }
