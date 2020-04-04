@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace LD
 
         public void menu()
         {
+             
             bool stop = true;
             while (stop != false)
             {
@@ -27,6 +29,7 @@ namespace LD
                     Console.WriteLine("Sukurti studenta pasirinkite (1)\n" +
                         "Perziureti studentu sarasa pasirinkti (2)\n" +
                         "Nuskaityti studentus is failo (3)\n" +
+                        "Studentu isvedimas i failus vargsiukai/kietiakai (4)\n" +
                         "Baigti programa iveskite (0)\n");
                     var input = Console.ReadLine();
                     if (int.Parse(input) == 1)
@@ -39,7 +42,11 @@ namespace LD
                     }
                     if (int.Parse(input) == 3)
                     {
-                        studentaifile();
+                        studentaifile(); 
+                    }
+                    if (int.Parse(input) == 4)
+                    {
+                        studentaiprint();
                     }
                     if (int.Parse(input) == 0) stop = false;
                 }
@@ -188,36 +195,67 @@ namespace LD
         }
         public void studentaifile() 
         {
-            string path = @"C:\Users\algir\Desktop\Studentai.txt";
-            string[] records = File.ReadAllLines(path);
-            var eile = new List<String>();
-            var pirmaeil = true;
-            foreach (string record in records)
+            List<String> path = new List<string>();
+            for(int i =1; i <= 3; i++) 
             {
-                if (pirmaeil) 
-                {
-                    eile = record.Split(' ' , StringSplitOptions.RemoveEmptyEntries).ToList();
-                    pirmaeil = false;
-                    continue;
-                }
-                var student = new Student();
-                var vardas = record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[0];
-                var pavarde = record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[1];
-                student.Vardas = vardas;
-                student.Pavarde = pavarde;
-                foreach (var studeile in eile.Where(nd => nd.Contains("ND")))
-                {
-                    var pazymiai=record.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?[eile.IndexOf(studeile)];
-                    student.Nd.Add(double.Parse(pazymiai));
-                }
-                var EgzIndex = eile.IndexOf("Egz.");
-                var egz= record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[EgzIndex];
-                student.Egz = double.Parse(egz);
-                Students.Add(student);
+                string dir = @"C:\Users\algir\Desktop\Studentai"+i.ToString()+".txt";
+                path.Add(dir);
             }
-            galutinis();
-
-
+            for (int j = 0; j < path.Count; j++)
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                string[] records = File.ReadAllLines(path[j]);
+                var eile = new List<String>();
+                var pirmaeil = true;
+                foreach (string record in records)
+                {
+                    if (pirmaeil)
+                    {
+                        eile = record.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
+                        pirmaeil = false;
+                        continue;
+                    }
+                    var student = new Student();
+                    var vardas = record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[0];
+                    var pavarde = record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[1];
+                    student.Vardas = vardas;
+                    student.Pavarde = pavarde;
+                    foreach (var studeile in eile.Where(nd => nd.Contains("ND")))
+                    {
+                        var pazymiai = record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[eile.IndexOf(studeile)];
+                        student.Nd.Add(double.Parse(pazymiai));
+                    }
+                    var EgzIndex = eile.IndexOf("Egz.");
+                    var egz = record.Split(' ', StringSplitOptions.RemoveEmptyEntries)?[EgzIndex];
+                    student.Egz = double.Parse(egz);
+                    Students.Add(student);
+                }
+                galutinis();
+                sw.Stop();
+                Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
+                
+            }
+        }
+        public void studentaiprint() 
+        {
+            string pathString = @"C:\Users\algir\Desktop\Studentai";
+            System.IO.Directory.CreateDirectory(pathString);
+            using (System.IO.StreamWriter file1 =
+            new System.IO.StreamWriter(@"C:\Users\algir\Desktop\Studentai\vargšiukai.txt"))
+            using (System.IO.StreamWriter file2 =
+            new System.IO.StreamWriter(@"C:\Users\algir\Desktop\Studentai\kietiakai.txt"))
+                {
+                    file1.WriteLine("{0,-20} {1,-20} {2,20} {3,20}", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)\n");
+                    file2.WriteLine("{0,-20} {1,-20} {2,20} {3,20}", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)\n");
+                foreach (var student in Students.OrderBy(x => x.Vardas))
+                    {
+                    if(student.Galutinis <5)
+                        file1.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"), student.Mediana.ToString("F"));
+                    else
+                        file2.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"), student.Mediana.ToString("F"));
+                }
+                }
         }
     }
 }
