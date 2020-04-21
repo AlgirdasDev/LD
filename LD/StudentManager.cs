@@ -13,11 +13,13 @@ namespace LD
     {
         public List<Student> Students { get; set; }
         public List<Student> vargsiukai { get; set; }
+        public List<Student> kietiakai { get; set; }
 
         public StudentManager()
         {
             Students = new List<Student>();
             vargsiukai = new List<Student>();
+            kietiakai = new List<Student>();
         }
 
         public void menu()
@@ -239,7 +241,7 @@ namespace LD
         }
         public void studentaigenerate()
         {
-            for (int i=1;i<=10000000; i++)
+            for (int i = 1; i <= 10000000; i++)
             {
                 var student = new Student();
                 Random rnd = new Random();
@@ -249,11 +251,11 @@ namespace LD
                 student.Vardas = vardas;
                 student.Pavarde = pavarde;
                 student.Egz = egz;
-                for (int j = 1; j <= 6; j++) 
+                for (int j = 1; j <= 6; j++)
                 {
                     student.Nd.Add(rnd.Next(1, 11));
                 }
-                Students.Add(student);               
+                Students.Add(student);
             }
             galutinis();
             Stopwatch sw = new Stopwatch();
@@ -262,25 +264,25 @@ namespace LD
                          System.Environment.SpecialFolder.DesktopDirectory);
             string pathString = System.IO.Path.Combine(strPath, "Studentai");
             System.IO.Directory.CreateDirectory(pathString);
-            for (int i = 1; i <= 5; i++) 
+            for (int i = 1; i <= 5; i++)
             {
                 using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(pathString +@"\Studentai" + i.ToString() + ".txt"))
+                new System.IO.StreamWriter(pathString + @"\Studentai" + i.ToString() + ".txt"))
                 {
-                    
+
                     if (i == 1)
                     {
                         sw.Start();
                         file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", "Vardas", "Pavarde", "ND1", "ND2", "ND3", "ND4", "ND5", "ND6", "Egz.\n");
-                        for (int j=0;j<1000;j++)
-                        { 
-                                file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", Students[j].Vardas, Students[j].Pavarde, Students[j].Nd[0], Students[j].Nd[1], Students[j].Nd[2], Students[j].Nd[3], Students[j].Nd[4], Students[j].Nd[5], Students[j].Egz);
+                        for (int j = 0; j < 1000; j++)
+                        {
+                            file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", Students[j].Vardas, Students[j].Pavarde, Students[j].Nd[0], Students[j].Nd[1], Students[j].Nd[2], Students[j].Nd[3], Students[j].Nd[4], Students[j].Nd[5], Students[j].Egz);
                         }
                         sw.Stop();
                         Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
                     }
                     if (i == 2)
-                    { 
+                    {
                         sw.Start();
                         file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", "Vardas", "Pavarde", "ND1", "ND2", "ND3", "ND4", "ND5", "ND6", "Egz.\n");
                         for (int j = 0; j < 10000; j++)
@@ -313,7 +315,7 @@ namespace LD
                         Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
                     }
                     if (i == 5)
-                    {   
+                    {
                         sw.Start();
                         file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", "Vardas", "Pavarde", "ND1", "ND2", "ND3", "ND4", "ND5", "ND6", "Egz.\n");
                         for (int j = 0; j < 10000000; j++)
@@ -323,7 +325,7 @@ namespace LD
                         sw.Stop();
                         Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
                     }
-                    
+
                 }
             }
         }
@@ -367,11 +369,11 @@ namespace LD
                 if (student.Galutinis < 5)
                 {
                     vargsiukai.Add(student);
-                    Students.Remove(student);
                 }
+                else
+                    kietiakai.Add(student);
             }
             sw.Stop();
-            Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
         }
     }
 }
