@@ -5,5 +5,7 @@ Naudojama 1 strategija: Bendro studentai konteinerio (vector, list ir deque tip�
 Konteineriai surašyti nuo greičiausiai atlikusio užduotį iki lėčiausiai (100000 studentų):
 
 List 170ms
+
 Queue 174ms
+
 LinkedList 197ms
