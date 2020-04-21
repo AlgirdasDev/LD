@@ -12,10 +12,12 @@ namespace LD
     class StudentManager
     {
         public List<Student> Students { get; set; }
+        public List<Student> vargsiukai { get; set; }
 
         public StudentManager()
         {
             Students = new List<Student>();
+            vargsiukai = new List<Student>();
         }
 
         public void menu()
@@ -32,6 +34,7 @@ namespace LD
                         "Nuskaityti studentus is failo (3)\n" +
                         "Studentu generavimas ir isvedimas i failus (4)\n" +
                         "Studentu isveddimas i failus vargsiukai/kietiakai (5)\n" +
+                        "Studentu skaidymas panaudojant tik vieną naują konteinerį(6)\n" +
                         "Baigti programa iveskite (0)\n");
                     var input = Console.ReadLine();
                     if (int.Parse(input) == 1)
@@ -53,6 +56,10 @@ namespace LD
                     if (int.Parse(input) == 5)
                     {
                         studentaiprint();
+                    }
+                    if (int.Parse(input) == 6)
+                    {
+                        studentuskaidymas();
                     }
                     if (int.Parse(input) == 0) stop = false;
                 }
@@ -348,6 +355,21 @@ namespace LD
                         file2.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} ", student.Vardas, student.Pavarde, student.Galutinis.ToString("F"), student.Mediana.ToString("F"));
                     }
                 }
+            sw.Stop();
+            Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
+        }
+        public void studentuskaidymas()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            foreach (var student in Students.OrderBy(x => x.Vardas))
+            {
+                if (student.Galutinis < 5)
+                {
+                    vargsiukai.Add(student);
+                    Students.Remove(student);
+                }
+            }
             sw.Stop();
             Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
         }
