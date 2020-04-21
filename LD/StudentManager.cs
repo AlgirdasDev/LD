@@ -260,61 +260,63 @@ namespace LD
                 using (System.IO.StreamWriter file =
                 new System.IO.StreamWriter(pathString +@"\Studentai" + i.ToString() + ".txt"))
                 {
-                    sw.Start();
+                    
                     if (i == 1)
                     {
+                        sw.Start();
                         file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", "Vardas", "Pavarde", "ND1", "ND2", "ND3", "ND4", "ND5", "ND6", "Egz.\n");
                         for (int j=0;j<1000;j++)
                         { 
                                 file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", Students[j].Vardas, Students[j].Pavarde, Students[j].Nd[0], Students[j].Nd[1], Students[j].Nd[2], Students[j].Nd[3], Students[j].Nd[4], Students[j].Nd[5], Students[j].Egz);
                         }
+                        sw.Stop();
+                        Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
                     }
-                    sw.Stop();
-                    Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
-                    sw.Start();
                     if (i == 2)
-                    {
+                    { 
+                        sw.Start();
                         file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", "Vardas", "Pavarde", "ND1", "ND2", "ND3", "ND4", "ND5", "ND6", "Egz.\n");
                         for (int j = 0; j < 10000; j++)
                         {
                             file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", Students[j].Vardas, Students[j].Pavarde, Students[j].Nd[0], Students[j].Nd[1], Students[j].Nd[2], Students[j].Nd[3], Students[j].Nd[4], Students[j].Nd[5], Students[j].Egz);
                         }
+                        sw.Stop();
+                        Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
                     }
-                    sw.Stop();
-                    Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
-                    sw.Start();
                     if (i == 3)
                     {
+                        sw.Start();
                         file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", "Vardas", "Pavarde", "ND1", "ND2", "ND3", "ND4", "ND5", "ND6", "Egz.\n");
                         for (int j = 0; j < 100000; j++)
                         {
                             file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", Students[j].Vardas, Students[j].Pavarde, Students[j].Nd[0], Students[j].Nd[1], Students[j].Nd[2], Students[j].Nd[3], Students[j].Nd[4], Students[j].Nd[5], Students[j].Egz);
                         }
+                        sw.Stop();
+                        Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
                     }
-                    sw.Stop();
-                    Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
-                    sw.Start();
                     if (i == 4)
                     {
+                        sw.Start();
                         file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", "Vardas", "Pavarde", "ND1", "ND2", "ND3", "ND4", "ND5", "ND6", "Egz.\n");
                         for (int j = 0; j < 1000000; j++)
                         {
                             file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", Students[j].Vardas, Students[j].Pavarde, Students[j].Nd[0], Students[j].Nd[1], Students[j].Nd[2], Students[j].Nd[3], Students[j].Nd[4], Students[j].Nd[5], Students[j].Egz);
                         }
+                        sw.Stop();
+                        Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
                     }
-                    sw.Stop();
-                    Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
-                    sw.Start();
                     if (i == 5)
-                    {
+                    {   
+                        sw.Start();
                         file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", "Vardas", "Pavarde", "ND1", "ND2", "ND3", "ND4", "ND5", "ND6", "Egz.\n");
                         for (int j = 0; j < 10000000; j++)
                         {
                             file.WriteLine("{0, -20} {1, -20} {2, 20} {3,20} {4, 20} {5,20} {6, 20} {7,20} {8, 20}", Students[j].Vardas, Students[j].Pavarde, Students[j].Nd[0], Students[j].Nd[1], Students[j].Nd[2], Students[j].Nd[3], Students[j].Nd[4], Students[j].Nd[5], Students[j].Egz);
                         }
+                        sw.Stop();
+                        Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
                     }
-                    sw.Stop();
-                    Console.WriteLine("Time Taken-->{0} ms", sw.ElapsedMilliseconds);
+                    
                 }
             }
         }
